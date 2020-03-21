@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>mall-framework-parent</artifactId>
+        <groupId>com.mall</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>mall-framework-service-api</artifactId>
+    <packaging>pom</packaging>
+
+    <description>所有微服务工程API抽取（对应工程的JavaBean、Feign、以及Hystrix配置，该工程主要对外提供依赖）</description>
+    <modules>
+        <module>mall-service-system-api</module>
+    </modules>
+
+    <dependencies>
+        <!--*****************************************引入项目内部依赖包********************************************-->
+        <dependency>
+            <groupId>com.mall</groupId>
+            <artifactId>mall-framework-common-db</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!--*****************************************引入依赖包********************************************-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+</project>

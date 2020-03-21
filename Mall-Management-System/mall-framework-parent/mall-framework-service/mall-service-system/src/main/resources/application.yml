@@ -1,0 +1,85 @@
+server:
+  port: 18081
+spring:
+  profiles:
+    active: dev #默认为开发环境
+  main:
+    allow-bean-definition-overriding: true #当遇到同样名字的时候，是否允许覆盖注册
+  application:
+    name: system
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:6001/eureka
+  instance:
+    prefer-ip-address: true
+
+security:
+  oauth2:
+    client:
+      ttl: 3600  #token存储到redis的过期时间
+      clientId: junshou
+      clientSecret: junshou
+      cookieMaxAge: -1
+      cookieDomain: localhost
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: mall-admin-secret #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间(60*60*24)
+  tokenHead: Bearer  #JWT负载中拿到开头
+
+#本地证书和秘钥以及证书密码配置
+encrypt:
+  key-store:
+    #证书路径
+    location: classpath:/junshou.jks
+    #秘钥
+    secret: junshou
+    #证书别名
+    alias: junshou
+    #证书密码
+    password: junshou
+
+secure:
+  ignored:
+    urls: #安全路径白名单
+      - /swagger-ui.html
+      - /swagger-resources/**
+      - /swagger/**
+      - /**/v2/api-docs
+      - /**/*.js
+      - /**/*.css
+      - /**/*.png
+      - /**/*.ico
+      - /webjars/springfox-swagger-ui/**
+      - /actuator/**
+      - /druid/**
+      - /admin/login
+      - /admin/register
+      - /admin/info
+      - /admin/logout
+      - /minio/upload
+
+logging:
+  level:
+    root: info #日志配置DEBUG,INFO,WARN,ERROR
+    com.macro.mall: debug
+#  file: demo_log.log #配置日志生成路径
+#  path: /var/logs #配置日志文件名称
+#feign:
+#  hystrix:
+#    enabled: true
+
+#hystrix 配置
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        timeout:
+#          #如果enabled设置为false，则请求超时交给ribbon控制
+#          enabled: true
+#        isolation:
+#          strategy: SEMAPHORE
+#          thread:
+#            # 熔断器超时时间，默认：1000/毫秒
+#            timeoutInMilliseconds: 60000
