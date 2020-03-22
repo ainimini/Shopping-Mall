@@ -9,22 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mall-framework-eurake</artifactId>
-
-    <description>
-        微服务注册中心
-    </description>
+    <artifactId>mall-framework-eureka</artifactId>
 
     <dependencies>
-        <!--*****************************************引入项目内部依赖包********************************************-->
-
-        <!--*****************************************引入依赖包********************************************-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
-            <version>2.1.0.RELEASE</version>
         </dependency>
     </dependencies>
-
-
 </project>
