@@ -1,0 +1,53 @@
+server:
+  port: 8001
+
+spring:
+  application:
+    name: gateway-system
+  main:
+    allow-bean-definition-overriding: true #当遇到同样名字的时候，是否允许覆盖注册
+  cloud:
+    gateway:
+      enabled: true
+      #globalcors:
+      #  cors-configurations:
+      #    '[/**]': # 匹配所有请求
+      #      allowedOrigins: "*" #跨域处理 允许所有的域
+      #      allowedMethods: # 支持的方法
+      #        - GET
+      #        - POST
+      #        - PUT
+      #        - DELETE
+      routes:
+      #唯一标识符
+      - id: js-system-route
+        #用户需要路由到的服务地址
+        uri: lb://system
+        #路由断言
+        predicates:
+        - Path=/api/admin/**
+        filters:
+        - StripPrefix=1
+        - name: RequestRateLimiter #请求数限流 名字不能随便写
+          args:
+           key-resolver: "#{@ipKeyResolver}"
+           redis-rate-limiter.replenishRate: 1 #令牌桶每秒填充平均速率
+           redis-rate-limiter.burstCapacity: 1 #令牌桶总容量
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:6001/eureka
+  instance:
+    prefer-ip-address: true
+# 暴露监控端点
+management:
+  endpoint:
+    gateway:
+      enabled: true
+    web:
+      exposure:
+        include: true

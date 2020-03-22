@@ -22,7 +22,6 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/resource")
-@CrossOrigin
 @Api(tags = "ResourceController", description = "后台资源管理")
 public class ResourceController {
 

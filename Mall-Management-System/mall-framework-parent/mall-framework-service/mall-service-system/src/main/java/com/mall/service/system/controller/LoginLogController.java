@@ -18,7 +18,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/loginLog")
-@CrossOrigin
 public class LoginLogController {
 
     @Autowired

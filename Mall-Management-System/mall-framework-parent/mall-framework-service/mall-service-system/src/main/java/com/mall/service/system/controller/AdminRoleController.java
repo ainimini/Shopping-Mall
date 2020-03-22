@@ -18,7 +18,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/adminRole")
-@CrossOrigin
 public class AdminRoleController {
 
     @Autowired

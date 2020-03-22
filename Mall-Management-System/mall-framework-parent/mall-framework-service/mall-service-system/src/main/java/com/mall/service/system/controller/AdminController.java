@@ -32,7 +32,6 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
-@CrossOrigin
 @Api(tags = "AdminController", description = "后台用户管理")
 public class AdminController {
 

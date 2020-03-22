@@ -18,7 +18,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/roleResource")
-@CrossOrigin
 public class RoleResourceController {
 
     @Autowired

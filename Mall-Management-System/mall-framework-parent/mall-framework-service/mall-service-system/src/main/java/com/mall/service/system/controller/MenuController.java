@@ -18,7 +18,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/menu")
-@CrossOrigin
 public class MenuController {
 
     @Autowired
