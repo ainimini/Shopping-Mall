@@ -1,64 +1,72 @@
 package com.mall.common.entity;
 
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- * 返回结果实体类
- */
-public class Result<T> {
+ * @author X
+ * @version 1.0
+ * @ClassName Result
+ * @description 统一返回结果
+ * @date 2020/4/1
+ **/
+@Data
+public class Result {
+    @ApiModelProperty(value = "是否成功")
+    private Boolean success;
 
-    private boolean flag;//是否成功
-    private Integer code;//返回码
-    private String message;//返回消息
+    @ApiModelProperty(value = "返回码")
+    private Integer code;
 
-    private T data;//返回数据
+    @ApiModelProperty(value = "返回消息")
+    private String message;
 
-    public Result(boolean flag, Integer code, String message, Object data) {
-        this.flag = flag;
-        this.code = code;
-        this.message = message;
-        this.data = (T)data;
+    @ApiModelProperty(value = "返回数据")
+    private Map<String, Object> data = new HashMap<String, Object>();
+
+    private Result(){}
+
+    public static Result ok(){
+        Result result = new Result();
+        result.setSuccess(true);
+        result.setCode(ResultCode.SUCCESS);
+        result.setMessage("成功");
+        return result;
     }
 
-    public Result(boolean flag, Integer code, String message) {
-        this.flag = flag;
-        this.code = code;
-        this.message = message;
+    public static Result error(){
+        Result result = new Result();
+        result.setSuccess(false);
+        result.setCode(ResultCode.ERROR);
+        result.setMessage("失败");
+        return result;
     }
 
-    public Result() {
-        this.flag = true;
-        this.code = StatusCode.OK;
-        this.message = "执行成功";
+    public Result success(Boolean success){
+        this.setSuccess(success);
+        return this;
     }
 
-    public boolean isFlag() {
-        return flag;
+    public Result message(String message){
+        this.setMessage(message);
+        return this;
     }
 
-    public void setFlag(boolean flag) {
-        this.flag = flag;
+    public Result code(Integer code){
+        this.setCode(code);
+        return this;
     }
 
-    public Integer getCode() {
-        return code;
+    public Result data(String key, Object value){
+        this.data.put(key, value);
+        return this;
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
+    public Result data(Map<String, Object> map){
+        this.setData(map);
+        return this;
     }
 }

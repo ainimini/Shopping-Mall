@@ -1,30 +1,21 @@
 package com.mall.common.entity;
 
 /**
- * 枚举了一些常用API操作码
- * Created by macro on 2019/4/19.
- */
-public enum ResultCode implements IErrorCode {
-    SUCCESS(200, "操作成功"),
-    FAILED(500, "操作失败"),
-    VALIDATE_FAILED(404, "参数检验失败"),
-    UNAUTHORIZED(401, "暂未登录或token已经过期"),
-    FORBIDDEN(403, "没有相关权限");
-    private long code;
-    private String message;
+ * @author X
+ * @version 1.0
+ * @className ResultCode
+ * @description 接口定义返回码
+ * @date 2020/4/1-18:07
+ **/
+public interface ResultCode {
 
-    private ResultCode(long code, String message) {
-        this.code = code;
-        this.message = message;
-    }
+    /***
+     * 操作成功代码
+     */
+    public static Integer SUCCESS = 20000;
 
-    @Override
-    public long getCode() {
-        return code;
-    }
-
-    @Override
-    public String getMessage() {
-        return message;
-    }
+    /***
+     * 操作失败代码
+     */
+    public static Integer ERROR = 20001;
 }

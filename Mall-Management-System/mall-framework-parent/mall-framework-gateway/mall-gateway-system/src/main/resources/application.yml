@@ -33,6 +33,19 @@ spring:
            key-resolver: "#{@ipKeyResolver}"
            redis-rate-limiter.replenishRate: 1 #令牌桶每秒填充平均速率
            redis-rate-limiter.burstCapacity: 1 #令牌桶总容量
+      - id: js-system-oauth-route
+        #用户需要路由到的服务地址
+        uri: lb://system-oauth
+        #路由断言
+        predicates:
+          - Path=/api/adminOauth/**
+        filters:
+          - StripPrefix=1
+          - name: RequestRateLimiter #请求数限流 名字不能随便写
+            args:
+              key-resolver: "#{@ipKeyResolver}"
+              redis-rate-limiter.replenishRate: 1 #令牌桶每秒填充平均速率
+              redis-rate-limiter.burstCapacity: 1 #令牌桶总容量
 
   redis:
     host: 127.0.0.1

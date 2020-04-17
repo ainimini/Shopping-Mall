@@ -1,0 +1,25 @@
+server:
+  port: 8002
+spring:
+  application:
+    name: service-msm
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  redis:
+    database: 0
+    host: 127.0.0.1
+    lettuce:
+      pool:
+        max-active: 20
+        max-idle: 5
+        max-wait: -1
+        min-idle: 0
+    port: 6379
+    timeout: 1800000
+#不同的服务器，地址不同
+aliyun:
+  oss:
+    file:
+      keyid: LTAI4FdUjPPpY9CWFDGcRh7h
+      keysecret: 2trOfZwbawygsrUpJYmzLd9MKf5TQQ

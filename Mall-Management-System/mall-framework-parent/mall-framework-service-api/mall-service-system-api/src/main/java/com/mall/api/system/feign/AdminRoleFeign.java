@@ -1,7 +1,6 @@
 package com.mall.api.system.feign;
 import com.github.pagehelper.PageInfo;
 import com.mall.api.system.pojo.AdminRole;
-import com.mall.common.entity.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 

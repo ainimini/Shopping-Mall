@@ -7,6 +7,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+/***
+ * 时间工具类
+ */
 public class DateUtil {
 
     /***
@@ -51,7 +54,8 @@ public class DateUtil {
     public static Date addDateMinutes(Date date,int minutes){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        calendar.add(Calendar.MINUTE, minutes);// 24小时制
+        // 24小时制
+        calendar.add(Calendar.MINUTE, minutes);
         date = calendar.getTime();
         return date;
     }
@@ -64,9 +68,23 @@ public class DateUtil {
     public static Date addDateHour(Date date,int hour){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        calendar.add(Calendar.HOUR, hour);// 24小时制
+        // 24小时制
+        calendar.add(Calendar.HOUR, hour);
         date = calendar.getTime();
         return date;
+    }
+
+    /**
+     * 在日期date上增加amount天 。
+     *
+     * @param date   处理的日期，非null
+     * @param amount 要加的天数，可能为负数
+     */
+    public static Date addDays(Date date, int amount) {
+        Calendar now =Calendar.getInstance();
+        now.setTime(date);
+        now.set(Calendar.DATE,now.get(Calendar.DATE)+amount);
+        return now.getTime();
     }
 
     /***
@@ -74,12 +92,11 @@ public class DateUtil {
      * @return
      */
     public static List<Date> getDateMenus(){
-      
         //定义一个List<Date>集合，存储所有时间段
         List<Date> dates = new ArrayList<Date>();
-        
         //循环12次
-        Date date = toDayStartHour(new Date()); //凌晨
+        //凌晨
+        Date date = toDayStartHour(new Date());
         for (int i = 0; i <12 ; i++) {
             //每次递增2小时,将每次递增的时间存入到List<Date>集合中
             dates.add(addDateHour(date,i*2));
