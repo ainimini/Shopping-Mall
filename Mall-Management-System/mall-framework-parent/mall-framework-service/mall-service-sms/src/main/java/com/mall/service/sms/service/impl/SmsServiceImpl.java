@@ -1,4 +1,4 @@
-package com.mall.service.msm.service.impl;
+package com.mall.service.sms.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.aliyuncs.CommonRequest;
@@ -7,8 +7,8 @@ import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
-import com.mall.service.msm.service.MsmService;
-import com.mall.service.msm.utils.ConstantPropertiesUtils;
+import com.mall.service.sms.service.SmsService;
+import com.mall.service.sms.utils.ConstantPropertiesUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -17,12 +17,12 @@ import java.util.HashMap;
 /**
  * @author X
  * @version 1.0
- * @ClassName MsmServiceImpl
+ * @ClassName SmsServiceImpl
  * @description 短信服务模块service层
  * @date 2020/4/17
  **/
 @Service
-public class MsmServiceImpl implements MsmService {
+public class SmsServiceImpl implements SmsService {
 
     /***
      * 发送短信验证码

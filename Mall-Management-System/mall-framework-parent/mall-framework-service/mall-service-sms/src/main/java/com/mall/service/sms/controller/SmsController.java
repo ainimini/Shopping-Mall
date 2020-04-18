@@ -1,9 +1,8 @@
-package com.mall.service.msm.controller;
+package com.mall.service.sms.controller;
 
-import com.baomidou.mybatisplus.extension.api.R;
 import com.mall.common.entity.Result;
 import com.mall.common.util.RandomUtil;
-import com.mall.service.msm.service.MsmService;
+import com.mall.service.sms.service.SmsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +19,19 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author X
  * @version 1.0
- * @ClassName MsmController
+ * @ClassName SmsController
  * @description 短信服务模块控制层
  * @date 2020/4/17
  **/
-@Api(description = "MSM")
+@Api(description = "SMS")
 @RestController
-@RequestMapping("/msm")
-public class MsmController {
+@RequestMapping("/sms")
+public class SmsController {
 
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
     @Autowired
-    private MsmService msmService;
+    private SmsService smsService;
 
     /***
      * 发送短信验证码
@@ -51,7 +50,7 @@ public class MsmController {
         String sixBitRandom = RandomUtil.getSixBitRandom();
         HashMap<String, String> param = new HashMap<>();
         param.put("code", sixBitRandom);
-        boolean isSend = msmService.send(param,phone);
+        boolean isSend = smsService.send(param,phone);
         if (isSend) {
             //设置Redis中的有效期
             redisTemplate.opsForValue().set(phone, sixBitRandom, 5, TimeUnit.MINUTES);

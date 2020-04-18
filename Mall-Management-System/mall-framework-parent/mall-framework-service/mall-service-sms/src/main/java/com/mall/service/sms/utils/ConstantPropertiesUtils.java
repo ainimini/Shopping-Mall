@@ -1,4 +1,4 @@
-package com.mall.service.msm.utils;
+package com.mall.service.sms.utils;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;

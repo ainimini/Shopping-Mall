@@ -15,7 +15,7 @@
     <description>所有各大微服务的父工程（微服务模块，该模块用于存放所有独立的微服务工程）</description>
     <modules>
         <module>mall-service-acl</module>
-        <module>mall-service-msm</module>
+        <module>mall-service-sms</module>
     </modules>
 
     <dependencies>
