@@ -34,8 +34,8 @@ public class UserController {
     @PostMapping("/register")
     @ApiOperation("员工注册")
     public Result register(@RequestBody UserLoginVo userLoginVo){
-        userService.register(userLoginVo);
-        return Result.ok().message("恭喜你注册成功，成为我们的一员！");
+        String jobNumber = userService.register(userLoginVo);
+        return Result.ok().message("恭喜工号为"+jobNumber+"注册成功，成为我们的一员！要牢记你的工号呦！！！");
     }
 
 }

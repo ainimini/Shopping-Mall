@@ -45,6 +45,9 @@ public class User implements Serializable {
     @ApiModelProperty(value = "身份证号")
     private String idNumber;
 
+    @ApiModelProperty(value = "员工工号")
+    private String jobNumber;
+
     @ApiModelProperty(value = "头像")
     private String avatar;
 

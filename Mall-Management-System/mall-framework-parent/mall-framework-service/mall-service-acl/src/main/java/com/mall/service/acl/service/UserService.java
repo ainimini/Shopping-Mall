@@ -1,5 +1,6 @@
 package com.mall.service.acl.service;
 
+import com.mall.common.entity.Result;
 import com.mall.service.acl.entity.pojo.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.service.acl.entity.vo.UserLoginVo;
@@ -18,5 +19,5 @@ public interface UserService extends IService<User> {
      * 员工注册
      * @param userLoginVo
      */
-    void register(UserLoginVo userLoginVo);
+    String register(UserLoginVo userLoginVo);
 }

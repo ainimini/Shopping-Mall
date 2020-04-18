@@ -1,10 +1,7 @@
 package com.mall.common.util;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * 获取随机数
@@ -60,5 +57,22 @@ public class RandomUtil {
 		}
 		System.out.print("\n");
 		return r;
+	}
+
+	/***
+	 * 给定字符串随机打乱顺序
+	 * @param base
+	 * @return
+	 */
+	public static String getStrRandom(String base,Integer num) {
+		//int length = 6;
+		//String base = "abcdefghijklmnopqrstuvwxyz0123456789";
+		Random random = new Random();
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < num; i++) {
+			int number = random.nextInt(base.length());
+			sb.append(base.charAt(number));
+		}
+		return sb.toString();
 	}
 }
