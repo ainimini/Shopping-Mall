@@ -7,12 +7,12 @@ import lombok.Data;
 /**
  * @author X
  * @version 1.0
- * @ClassName UserLoginVo
+ * @ClassName UserRegisterVo
  * @description 员工注册验证封装
  * @date 2020/4/17
  **/
 @Data
-public class UserLoginVo extends User {
+public class UserRegisterVo extends User {
 
     @ApiModelProperty(value = "验证码")
     private String code;

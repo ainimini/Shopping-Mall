@@ -15,7 +15,6 @@
         <module>mall-framework-common</module>
         <module>mall-framework-common-db</module>
         <module>mall-framework-service</module>
-        <module>mall-framework-service-api</module>
         <module>mall-framework-gateway</module>
     </modules>
 
