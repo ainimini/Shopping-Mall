@@ -17,6 +17,7 @@
         <module>mall-service-acl</module>
         <module>mall-service-sms</module>
         <module>mall-service-oss</module>
+        <module>mall-service-vod</module>
     </modules>
 
     <dependencies>
