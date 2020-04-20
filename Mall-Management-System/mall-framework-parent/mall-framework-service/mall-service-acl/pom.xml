@@ -10,6 +10,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>mall-service-acl</artifactId>
-    <packaging>pom</packaging>
+
 
 </project>

@@ -29,10 +29,9 @@ import java.util.Map;
  * @author X
  * @since 2020-04-17
  */
-@Api(description = "用户")
+@Api(description = "SM系统管理")
 @RestController
-//@RequestMapping("/acl/user")
-@RequestMapping("/api/admin")
+@RequestMapping("/acl/user")
 @CrossOrigin
 public class UserController {
 
@@ -138,7 +137,7 @@ public class UserController {
             @ApiParam(name = "limit", value = "每页记录数", required = true)
             @PathVariable Long limit,
 
-            @ApiParam(name = "courseQuery", value = "查询对象", required = false)
+            @ApiParam(name = "userQuery", value = "查询对象", required = false)
             @RequestBody UserQueryVo userQueryVo) {
         Page<User> userPage = new Page<>(page, limit);
         Map<String, Object> map = userService.pageInfo(userPage, userQueryVo);

@@ -16,4 +16,7 @@ public class UserRegisterVo extends User {
 
     @ApiModelProperty(value = "验证码")
     private String code;
+
+    @ApiModelProperty(value = "岗位")
+    private String post;
 }

@@ -32,4 +32,4 @@ hystrix:
 mybatis-plus:
   #configuration:
   #  log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  mapper-locations: classpath:com/itguigu/service/edu/mapper/xml/*.xml
+  mapper-locations: classpath:com/mall/service/acl/mapper/xml/*.xml

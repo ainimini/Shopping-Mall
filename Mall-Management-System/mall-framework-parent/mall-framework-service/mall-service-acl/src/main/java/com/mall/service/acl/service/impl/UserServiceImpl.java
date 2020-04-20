@@ -1,20 +1,21 @@
 package com.mall.service.acl.service.impl;
 
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mall.common.entity.dto.CustomException;
 import com.mall.common.util.DateUtil;
 import com.mall.common.util.RandomUtil;
+import com.mall.service.acl.entity.pojo.Post;
 import com.mall.service.acl.entity.pojo.User;
+import com.mall.service.acl.entity.pojo.UserPostRelated;
 import com.mall.service.acl.entity.vo.UserQueryVo;
 import com.mall.service.acl.entity.vo.UserRegisterVo;
 import com.mall.service.acl.entity.vo.UserUpdateVo;
 import com.mall.service.acl.mapper.UserMapper;
+import com.mall.service.acl.service.PostService;
+import com.mall.service.acl.service.UserPostRelatedService;
 import com.mall.service.acl.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import io.swagger.annotations.ApiModelProperty;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -39,6 +40,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
+    @Autowired
+    private PostService postService;
+    @Autowired
+    private UserPostRelatedService userPostRelatedService;
 
     /***
      * 员工注册
@@ -84,10 +89,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
          * 获取redis中的验证码
          */
         //通过手机号查询redis验证码
-        String code = redisTemplate.opsForValue().get(userRegisterVo.getPhone());
+       /* String code = redisTemplate.opsForValue().get(userRegisterVo.getPhone());
         if (!code.equals(userRegisterVo.getCode())) {
             throw new CustomException(20001, "请输入正确的验证码");
-        }
+        }*/
         //判断手机号是否存在
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("phone", userRegisterVo.getPhone());
@@ -113,10 +118,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Integer sex = userRegisterVo.getSex();
         //封装员工工号
         userRegisterVo.setJobNumber(fourBitRandom + randomString + sex);
+        //存入数据库
         baseMapper.insert(userRegisterVo);
         HashMap<String, String> map = new HashMap<>();
         map.put("jobNumber", userRegisterVo.getJobNumber());
         map.put("nickName", userRegisterVo.getNickName());
+
+        //获得员工入职的岗位
+        String post = userRegisterVo.getPost();
+        //条件构造
+        QueryWrapper<Post> postWrapper = new QueryWrapper<>();
+        postWrapper.eq("post_name",post);
+        //获得岗位
+        Post onePost = postService.getOne(postWrapper);
+        //创建员工岗位实体类实体类
+        UserPostRelated userPostRelated = new UserPostRelated();
+        userPostRelated.setUserId(userRegisterVo.getId());
+        userPostRelated.setPostId(onePost.getId());
+        userPostRelatedService.save(userPostRelated);
         return map;
     }
 
@@ -146,6 +165,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (!StringUtils.isEmpty(userQueryVo.getSex())) {
             wrapper.eq("sex", userQueryVo.getSex());
         }
+        wrapper.eq("is_deleted",0);
         baseMapper.selectPage(userPage, wrapper);
         /***
          * 封装
