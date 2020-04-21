@@ -242,4 +242,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         return false;
     }
+
+    /***
+     * 查询数据库当前用用户是否曾经使用过微信登录
+     * @param openid
+     * @return
+     */
+    @Override
+    public User getByOpenid(String openid) {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("openId",openid);
+        User user = baseMapper.selectOne(wrapper);
+        return user;
+    }
 }

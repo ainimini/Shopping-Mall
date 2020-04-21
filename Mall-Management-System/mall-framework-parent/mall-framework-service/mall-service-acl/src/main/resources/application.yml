@@ -1,5 +1,6 @@
 server:
-  port: 8001
+  #port: 8001
+  port: 8150
 spring:
   application:
     name: service-acl
@@ -33,3 +34,9 @@ mybatis-plus:
   #configuration:
   #  log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:com/mall/service/acl/mapper/xml/*.xml
+
+wx:
+  open:
+    app_secret: a7482517235173ddb4083788de60b90e
+    app_id: wxed9954c01bb89b47
+    redirect_url: http://guli.shop/api/ucenter/wx/callback
