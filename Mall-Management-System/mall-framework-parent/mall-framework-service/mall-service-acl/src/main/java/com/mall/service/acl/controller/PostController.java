@@ -28,7 +28,7 @@ import java.util.Map;
  * @author X
  * @since 2020-04-20
  */
-@Api(description = "SM系统管理")
+@Api(description = "SM系统管理 岗位")
 @RestController
 @RequestMapping("/acl/post")
 @CrossOrigin

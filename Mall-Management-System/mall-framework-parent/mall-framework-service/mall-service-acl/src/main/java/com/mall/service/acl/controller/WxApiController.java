@@ -7,8 +7,10 @@ import com.mall.common.util.JwtUtil;
 import com.mall.service.acl.entity.pojo.User;
 import com.mall.service.acl.service.UserService;
 import com.mall.service.acl.utils.ConstantWXUtil;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -25,8 +27,10 @@ import java.util.HashMap;
  * @date 2020/4/12
  **/
 //注意这里没有配置 @RestController
+@Api(description = "SM系统管理 微信登录")
 @Controller
 @RequestMapping("/api/ucenter/wx")
+@CrossOrigin
 public class WxApiController {
 
     @Autowired

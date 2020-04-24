@@ -130,6 +130,31 @@ public class DateUtil {
         return simpleDateFormat.format(date);
     }
 
+    /***
+     * yyyy-MM-dd
+     * @param date
+     * @return
+     */
+    public static String date_str(Date date){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return simpleDateFormat.format(date);
+    }
+
+    /***
+     * 时间转成yyyyMMddHH
+     * @param dateStr
+     * @return
+     */
+    public static Date Str2Date(String dateStr){
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            return simpleDateFormat.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
 
         //存储数据结果

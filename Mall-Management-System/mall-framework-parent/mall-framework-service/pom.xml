@@ -18,6 +18,7 @@
         <module>mall-service-sms</module>
         <module>mall-service-oss</module>
         <module>mall-service-vod</module>
+        <module>mall-service-hrm</module>
     </modules>
 
     <dependencies>

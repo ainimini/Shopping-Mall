@@ -2,8 +2,11 @@ package com.mall.service.acl.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.common.entity.Result;
+import com.mall.common.entity.dto.CustomException;
+import com.mall.common.util.JwtUtil;
 import com.mall.service.acl.entity.pojo.User;
 import com.mall.service.acl.entity.vo.UserQueryVo;
 import com.mall.service.acl.entity.vo.UserRegisterVo;
@@ -16,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +33,7 @@ import java.util.Map;
  * @author X
  * @since 2020-04-17
  */
-@Api(description = "SM系统管理")
+@Api(description = "SM系统管理 员工")
 @RestController
 @RequestMapping("/acl/user")
 @CrossOrigin
@@ -159,16 +163,34 @@ public class UserController {
 
     /*****************************************************************************/
 
-    @ApiOperation(value = "登录")
-    @PostMapping(value = "/login")
-    public Result login() {
-        return Result.ok().data("token", "admin");
+    /***
+     * 用户登录
+     * @param user
+     * @return
+     */
+    @PostMapping("/login")
+    @ApiOperation("用户登录")
+    public Result loginUser(@RequestBody User user) {
+        String token = userService.login(user);
+        return Result.ok().data("token", token);
     }
 
-    @ApiOperation(value = "所有讲师列表")
-    @GetMapping(value = "/info")
-    public Result info() {
-        return Result.ok().data("roles", "admin").data("name", "admin");
+    /***
+     * 根据token获取登录信息
+     * @param request
+     * @return
+     */
+    @ApiOperation(value = "根据token获取登录信息")
+    @GetMapping("/auth/getLoginInfo")
+    public Result getLoginInfo(HttpServletRequest request) {
+        try {
+            String useeId = JwtUtil.getMemberIdByJwtToken(request);
+            User user = userService.getById(useeId);
+            return Result.ok().data("userInfo", user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new CustomException(20001, "error");
+        }
     }
 }
 

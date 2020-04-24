@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.common.entity.dto.CustomException;
 import com.mall.common.util.DateUtil;
+import com.mall.common.util.JwtUtil;
 import com.mall.common.util.RandomUtil;
 import com.mall.service.acl.entity.pojo.Post;
 import com.mall.service.acl.entity.pojo.User;
@@ -47,7 +48,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     /***
      * 员工注册
-     * TODO 员工入职岗位
+     *
      * @param userRegisterVo
      */
     @Override
@@ -89,10 +90,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
          * 获取redis中的验证码
          */
         //通过手机号查询redis验证码
-       /* String code = redisTemplate.opsForValue().get(userRegisterVo.getPhone());
+        String code = redisTemplate.opsForValue().get(userRegisterVo.getPhone());
         if (!code.equals(userRegisterVo.getCode())) {
             throw new CustomException(20001, "请输入正确的验证码");
-        }*/
+        }
         //判断手机号是否存在
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("phone", userRegisterVo.getPhone());
@@ -128,7 +129,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String post = userRegisterVo.getPost();
         //条件构造
         QueryWrapper<Post> postWrapper = new QueryWrapper<>();
-        postWrapper.eq("post_name",post);
+        postWrapper.eq("post_name", post);
         //获得岗位
         Post onePost = postService.getOne(postWrapper);
         //创建员工岗位实体类实体类
@@ -165,7 +166,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (!StringUtils.isEmpty(userQueryVo.getSex())) {
             wrapper.eq("sex", userQueryVo.getSex());
         }
-        wrapper.eq("is_deleted",0);
+        wrapper.eq("is_deleted", 0);
         baseMapper.selectPage(userPage, wrapper);
         /***
          * 封装
@@ -251,8 +252,43 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public User getByOpenid(String openid) {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq("openId",openid);
+        wrapper.eq("openId", openid);
         User user = baseMapper.selectOne(wrapper);
         return user;
+    }
+
+    /***
+     * 用户登录
+     * @param user
+     * @return
+     */
+    @Override
+    public String login(User user) {
+        //判断传过来的值是否为空
+        String phone = user.getPhone();
+        String password = user.getPassword();
+        if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(password)) {
+            throw new CustomException(20001, "登录失败");
+        }
+        //查询用户是否存在
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("phone", phone);
+        User selectOne = baseMapper.selectOne(wrapper);
+        if (null == selectOne) {
+            throw new CustomException(20001, "登录失败");
+        }
+        //判断密码是否正确
+        if (!BCrypt.checkpw(password, selectOne.getPassword())) {
+            throw new CustomException(20001, "登录失败");
+        }
+        //判断用户是否禁用
+        if (selectOne.getIsDisabled()) {
+            throw new CustomException(20001, "该用户已被禁用");
+        }
+
+        //生成token
+        String jwtToken = JwtUtil.getJwtToken(selectOne.getId(), selectOne.getUsername());
+
+        return jwtToken;
     }
 }

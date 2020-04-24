@@ -60,4 +60,11 @@ public interface UserService extends IService<User> {
      * @return
      */
     User getByOpenid(String openid);
+
+    /***
+     * 用户登录
+     * @param user
+     * @return
+     */
+    String login(User user);
 }
